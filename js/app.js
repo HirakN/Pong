@@ -23,3 +23,9 @@ function createBall() {
 	ctx.arc(250,150,5,0,2*Math.PI);
 	ctx.fill();
 }
+
+function game() {
+	
+}
+
+setInterval(game(), 3000);
