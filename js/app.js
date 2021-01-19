@@ -1,31 +1,54 @@
 // Get canvas element
-var canvas = document.getElementById("myCanvas");
+let canvas = document.getElementById("myCanvas");
 // Drawing object
-var ctx = canvas.getContext("2d");
+let ctx = canvas.getContext("2d");
 
-createPaddles()
+let h = canvas.height;
+let w = canvas.width;
 
-createBall();
+let height = h/3;
 
-function createPaddles() {
-	h = canvas.height;
-	w = canvas.width;
+let move = function(e) {
+	document.getElementById("keyPressed").innerText = e.code;
+	if(e.code == 'KeyS') {
+		if(height+5 < h - 100) {
+			height+=5
+		}
+		else {
+			height = h - 100
+		}
+	}
+	else if(e.code == 'KeyW') {
+		if(height-5 > 0) {
+			height-=5
+		}
+		else {
+			height = 0
+		}
+	}
+}
+
+function drawPaddles(pheight) {
 	padHeight = 100;
 	padWidth = 10;
-
 	ctx.fillStyle = "white";
-	ctx.fillRect(0,h/3,padWidth,padHeight);
+	// ctx.fillRect(0,h/3,padWidth,padHeight);
+	ctx.fillRect(0,pheight,padWidth,padHeight);
 	ctx.fillRect(w - 10,h/3,padWidth,padHeight);
 }
 
-function createBall() {
+function drawBall() {
 	ctx.fillStyle = "white";
-	ctx.arc(250,150,5,0,2*Math.PI);
+	ctx.arc(w/2,h/2,5,0,2*Math.PI);
 	ctx.fill();
 }
 
 function game() {
-	
+	ctx.clearRect(0, 0, canvas.width, canvas.height)
+	drawBall()
+	drawPaddles(height);
 }
 
-setInterval(game(), 3000);
+document.addEventListener('keypress', move);
+
+setInterval(game, 16);
